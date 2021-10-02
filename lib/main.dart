@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'dart:math';
 
 void main() {
@@ -6,28 +8,27 @@ void main() {
     MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.black,
         appBar: AppBar(
+          backgroundColor: Colors.black,
           title: Center(child: Text('Rock paper scissors')),
-          backgroundColor: Colors.black26,
         ),
-        body: DicePage(),
+        body: RpsPage(),
       ),
     ),
   );
 }
 
-class DicePage extends StatefulWidget {
-  const DicePage({Key? key}) : super(key: key);
+class RpsPage extends StatefulWidget {
+  const RpsPage({Key? key}) : super(key: key);
 
   @override
-  _DicePageState createState() => _DicePageState();
+  _RpsPageState createState() => _RpsPageState();
 }
 
-class _DicePageState extends State<DicePage> {
+class _RpsPageState extends State<RpsPage> {
   int rps = 1;
-  String status = '3';
-  //double imageSize = 80;
+  String status = 'Click any of the three image below';
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,36 +37,68 @@ class _DicePageState extends State<DicePage> {
           children: [
             Expanded(
                 child: TextButton(
-                    onPressed: () {
-                      changeDiceFace();
-                    },
-                    child: Image.asset('images/$rps.jpg'))),
+                    onPressed: () {}, child: Image.asset('images/$rps.jpg'))),
             Expanded(
               child: Center(
                 child: Text(
                   '$status',
-                  style: TextStyle(color: Colors.white, fontSize: 100),
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
               ),
             ),
             Row(children: [
               Expanded(
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        change();
+                        if (rps == 1) {
+                          status = 'No winner!';
+                        } else if (rps == 2) {
+                          status = 'I won!';
+                        } else if (rps == 3) {
+                          status = 'You won!';
+                        }
+                      });
+                    },
                     child: Image.asset(
                       'images/1.jpg',
                     )),
               ),
               Expanded(
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        change();
+                        if (rps == 1) {
+                          status = 'You won!';
+                        } else if (rps == 2) {
+                          status = 'No winner!';
+                        } else if (rps == 3) {
+                          status = 'I won!';
+                        }
+                      });
+                    },
                     child: Image.asset(
                       'images/2.jpg',
                     )),
               ),
               Expanded(
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        change();
+                        if (rps == 1) {
+                          status = 'I won!';
+                        } else if (rps == 2) {
+                          status = 'You won!';
+                        } else if (rps == 3) {
+                          status = 'No winner!';
+                        }
+                      });
+                    },
                     child: Image.asset(
                       'images/3.jpg',
                     )),
@@ -77,9 +110,7 @@ class _DicePageState extends State<DicePage> {
     );
   }
 
-  void changeDiceFace() {
-    setState(() {
-      rps = Random().nextInt(3) + 1;
-    });
+  void change() {
+    rps = Random().nextInt(3) + 1;
   }
 }
