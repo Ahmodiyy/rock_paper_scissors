@@ -8,7 +8,7 @@ void main() {
       home: Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          title: Center(child: Text('Dicee')),
+          title: Center(child: Text('Rock paper scissors')),
           backgroundColor: Colors.black26,
         ),
         body: DicePage(),
@@ -25,28 +25,52 @@ class DicePage extends StatefulWidget {
 }
 
 class _DicePageState extends State<DicePage> {
-  int leftImageNumber = 1;
-  int rightImageNumber = 1;
+  int rps = 1;
+  String status = '3';
+  //double imageSize = 80;
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Row(
+        child: Column(
           children: [
             Expanded(
                 child: TextButton(
                     onPressed: () {
                       changeDiceFace();
-                      print('left button pressed');
                     },
-                    child: Image.asset('images/dice$leftImageNumber.png'))),
+                    child: Image.asset('images/$rps.jpg'))),
             Expanded(
+              child: Center(
+                child: Text(
+                  '$status',
+                  style: TextStyle(color: Colors.white, fontSize: 100),
+                ),
+              ),
+            ),
+            Row(children: [
+              Expanded(
                 child: TextButton(
-                    onPressed: () {
-                      changeDiceFace();
-                      print('right button pressed');
-                    },
-                    child: Image.asset('images/dice$rightImageNumber.png'))),
+                    onPressed: () {},
+                    child: Image.asset(
+                      'images/1.jpg',
+                    )),
+              ),
+              Expanded(
+                child: TextButton(
+                    onPressed: () {},
+                    child: Image.asset(
+                      'images/2.jpg',
+                    )),
+              ),
+              Expanded(
+                child: TextButton(
+                    onPressed: () {},
+                    child: Image.asset(
+                      'images/3.jpg',
+                    )),
+              ),
+            ]),
           ],
         ),
       ),
@@ -55,8 +79,7 @@ class _DicePageState extends State<DicePage> {
 
   void changeDiceFace() {
     setState(() {
-      leftImageNumber = Random().nextInt(6) + 1;
-      rightImageNumber = Random().nextInt(6) + 1;
+      rps = Random().nextInt(3) + 1;
     });
   }
 }
